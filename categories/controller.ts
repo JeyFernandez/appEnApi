@@ -1,36 +1,50 @@
-import repository from './repository';
+import { Category } from './interfaces';
+import repository from './repositry';
+import validations from './validations';
 
 const list = async () => {
     return await repository.list();
 }
 
-const store = async (data: any) => {
-    if (!data.name) throw new Error("Property name is missing")
-    const categorie = await repository.store(data);
-    return categorie;
+
+const store = async (data: Category) => {
+    validations.validateCategoryInput(data);
+
+    data.slug = (data.slug || data.name).split(' ').join('-');
+
+    const model = await repository.store(data);
+    return model;
 }
+
+
 const getOne = async (id: string) => {
-    const categorie = await repository.getOne(id);
-    if(!categorie) throw new Error('Categorie not found')
-    return categorie;
+    const model = await repository.getOne(id);
+    if (!model) throw new Error("Product not found");
+
+    return model;
 }
+
 const deleteItem = async (id: string) => {
-    const categorie = await repository.deleteItem(id);
-    if(!categorie) throw new Error('Categorie not found')
-    return categorie;
+    const model = await repository.getOne(id);
+    if (!model) throw new Error("Product not found");
+
+    return await repository.delete(id);
 }
 
-const update = async (id: string, data: any) => {
-    const categorie = await repository.updateOne(id, data);
-    if(!categorie) throw new Error('Categorie not found')
-    return categorie;
- }
+const update = async (id: string, data: Category) => {
+    // TODO: validar que los datos sean correctos
+    const model = await repository.getOne(id);
+    if (!model) throw new Error("Product not found");
 
+
+    const modelUpdated = await repository.update(id, data);
+    return modelUpdated;
+}
 
 export default {
     list,
     store,
     getOne,
     delete: deleteItem,
-    update,
+    update
 }

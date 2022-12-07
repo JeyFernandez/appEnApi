@@ -1,4 +1,3 @@
-
 import repository from './repository';
 
 const list = async () => {

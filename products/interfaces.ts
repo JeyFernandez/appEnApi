@@ -1,4 +1,5 @@
 export interface Product {
     name: string
-    price: number
+    cantidad: number
+    categories: Array<string>
 }

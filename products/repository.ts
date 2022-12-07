@@ -8,9 +8,10 @@ const list = async () => {
 }
 
 const store = async (data: IProduct) => {
-    const id = ulid();
+  
+    const categories = data.categories.join()
 
-    const product = new Product({ name: data.name, price: data.price, id });
+    const product = new Product({ name: data.name, cantidad: data.cantidad, categories });
 
     await product.save();
 

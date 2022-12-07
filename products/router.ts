@@ -5,7 +5,7 @@ import controller from './controller';
 const router = Router();
 
 
-router.get("/", requireAuth, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     const productos = await controller.list();
     res.json(productos);
 });
@@ -20,9 +20,8 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
         });
     }
 });
-//https://www.tutofox.com/react-native/react-native-como-conectar-y-listar-datos-desde-api-rest/
 
-router.get("/:id", requireAuth, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
         const product = await controller.getOne(id);
@@ -34,11 +33,12 @@ router.get("/:id", requireAuth, async (req: Request, res: Response, next: NextFu
     }
 });
 
-router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
+router.delete("/:id", requireAuth, (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
     // let myproducts = products.filter(item => item.id !== id);
     res.json({});
 });
 
-export default router; 
+
+export default router;

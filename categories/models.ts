@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const CategoriesSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
     id: String,
     name: String,
     description: String,
-    Slug: String
+    slug: String
 });
 
-export const Category = mongoose.model('Category', CategoriesSchema);
+export const Category = mongoose.model('Category', categorySchema);

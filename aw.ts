@@ -22,4 +22,3 @@ const coffee2 = getCoffee()
 
 console.log('log fuera del then');
 
-
